@@ -8,4 +8,4 @@ router.get("/", getAllRecipes);
 
 // Additional routes for update, delete, etc.
 
-export default router;
+export const RecipeRoutes = router;

@@ -1,5 +1,3 @@
-Live site link: http://localhost:5000/ Server side code link: https://github.com/devalienbrain/tasty-tales-recipe-sharing-client
-
 # Express-Mongoose-Typescript Project
 
 This project is a boilerplate for setting up an Express server with Mongoose and TypeScript. It includes configurations for ESLint and Prettier for code quality and formatting.
