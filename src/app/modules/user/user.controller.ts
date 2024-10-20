@@ -1,39 +1,52 @@
-import { Request, Response } from 'express';
-import { registerUserService, loginUserService, getUserProfileService, updateUserProfileService } from './user.service';
-import { generateToken } from '../utils/jwtHelper';
+import { NextFunction, Request, Response } from "express";
+import { UserServices } from "./user.service";
 
-export const registerUser = async (req: Request, res: Response) => {
+const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const newUser = await registerUserService(req.body);
-    return res.status(201).json({ user: newUser, token: generateToken(newUser._id) });
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
+    const userData = req.body;
+    console.log(req.body);
+    // const zodParsedData = studentValidationSchema.parse(studentData);
+
+    const result = await UserServices.createUserIntoDB(userData);
+
+    res.status(200).json({
+      statusCode: 200,
+      success: true,
+      message: "User registered succesfully",
+      data: result,
+    });
+  } catch (err) {
+    next(err);
   }
 };
 
-export const loginUser = async (req: Request, res: Response) => {
+export const getAllUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    const user = await loginUserService(req.body.email, req.body.password);
-    return res.status(200).json({ user, token: generateToken(user._id) });
+    const Users = await UserServices.getAllUsers();
+    if (Users.length === 0) {
+      return res.status(404).json({
+        success: false,
+        statusCode: 404,
+        message: "No Data Found",
+        data: [],
+      });
+    }
+    res.status(200).json({
+      success: true,
+      statusCode: 200,
+      message: "Users retrieved successfully",
+      data: Users,
+    });
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    next(error);
   }
 };
 
-export const getUserProfile = async (req: Request, res: Response) => {
-  try {
-    const userProfile = await getUserProfileService(req.user._id);
-    return res.status(200).json(userProfile);
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
-
-export const updateUserProfile = async (req: Request, res: Response) => {
-  try {
-    const updatedUser = await updateUserProfileService(req.user._id, req.body);
-    return res.status(200).json(updatedUser);
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
+export const UserControllers = {
+  createUser,
+  getAllUsers,
 };
