@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Recipe from "./recipe.model";
 import { recipeValidationSchema } from "./recipe.validation";
+import { getRecipeByIdService } from "./recipe.service";
 
 export const createRecipe = async (req: Request, res: Response) => {
   try {
@@ -22,4 +23,17 @@ export const getAllRecipes = async (req: Request, res: Response) => {
   }
 };
 
-// Additional controller functions can be added for update, delete, etc.
+export const getRecipeById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const recipe = await getRecipeByIdService(id); // Use service to get recipe by ID
+
+    if (!recipe) {
+      return res.status(404).json({ error: "Recipe not found" });
+    }
+
+    res.json(recipe);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching recipe" });
+  }
+};
