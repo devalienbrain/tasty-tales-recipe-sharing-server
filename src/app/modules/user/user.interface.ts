@@ -11,7 +11,7 @@ export interface TUser {
   phone: string;
   role: TRole;
   address: string;
-  isDeleted: boolean;
+  isBlocked: boolean;
 }
 
 export interface UserModel extends Model<TUser> {

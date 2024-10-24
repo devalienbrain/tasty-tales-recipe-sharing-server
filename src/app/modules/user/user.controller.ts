@@ -1,3 +1,4 @@
+
 import { NextFunction, Request, Response } from "express";
 import { UserServices } from "./user.service";
 
@@ -46,7 +47,27 @@ export const getAllUsers = async (
   }
 };
 
+export const blockUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.params.id;
+    const user = await UserServices.blockUserById(userId);
+
+    res.status(200).json({
+      success: true,
+      message: "User blocked successfully",
+      data: user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const UserControllers = {
   createUser,
   getAllUsers,
+  blockUser,
 };

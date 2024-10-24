@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-this-alias */
 import bcrypt from "bcrypt";
 import { Schema, model } from "mongoose";
 import config from "../../config";
@@ -39,7 +38,7 @@ const userSchema = new Schema<TUser>(
       type: String,
       required: true,
     },
-    isDeleted: {
+    isBlocked: {
       type: Boolean,
       default: false,
     },
@@ -57,11 +56,6 @@ userSchema.pre("save", async function (next) {
       Number(config.bcrypt_salt_rounds)
     );
   }
-  next();
-});
-
-userSchema.post("save", function (doc, next) {
-  doc.password = "";
   next();
 });
 
