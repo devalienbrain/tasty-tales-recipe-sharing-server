@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
 import Recipe from "./recipe.model";
 import { recipeValidationSchema } from "./recipe.validation";
-import { getRecipeByIdService } from "./recipe.service";
+import {
+  getAllRecipesService,
+  getRecipeByIdService,
+  updateRecipeService,
+  deleteRecipeService,
+} from "./recipe.service";
 
 export const createRecipe = async (req: Request, res: Response) => {
   try {
@@ -35,5 +40,36 @@ export const getRecipeById = async (req: Request, res: Response) => {
     res.json(recipe);
   } catch (error) {
     res.status(500).json({ error: "Error fetching recipe" });
+  }
+};
+
+export const updateRecipe = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const validatedData = recipeValidationSchema.parse(req.body);
+    const updatedRecipe = await updateRecipeService(id, validatedData);
+
+    if (!updatedRecipe) {
+      return res.status(404).json({ error: "Recipe not found" });
+    }
+
+    res.json(updatedRecipe);
+  } catch (error) {
+    res.status(400).json({ error: error.errors || "Error updating recipe" });
+  }
+};
+
+export const deleteRecipe = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const deletedRecipe = await deleteRecipeService(id);
+
+    if (!deletedRecipe) {
+      return res.status(404).json({ error: "Recipe not found" });
+    }
+
+    res.status(200).json({ message: "Recipe deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Error deleting recipe" });
   }
 };
