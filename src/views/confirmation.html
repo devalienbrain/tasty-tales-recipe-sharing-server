@@ -1,112 +1,168 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Payment Confirmation: TastyTale</title>
-    <style>
-      body {
-        background-color: #2d2a45; /* Synthwave theme's primary background color */
-        color: whitesmoke; /* Text color to contrast with the dark background */
-        font-family: "Arial", sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
-        font-size: medium;
-        font-weight: bold;
-        text-align: center;
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Confirmation: TastyTale</title>
+  <style>
+    body {
+      background-color: #2d2a45;
+      /* Synthwave theme's primary background color */
+      color: whitesmoke;
+      /* Text color to contrast with the dark background */
+      font-family: "Arial", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      font-size: medium;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      padding: 2rem;
+      background: #1d1b3d;
+      /* Dark background for the card */
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    h1,
+    h2 {
+      color: #44c7e4;
+      font-weight: bolder;
+    }
+
+    .message {
+      color: #b3ff27;
+    }
+
+    .summary {
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    .summary p {
+      margin: 5px 0;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    .btn-bg {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.5rem 1.5rem;
+      background-color: #00ffff;
+      /* Cyan background */
+      color: #1d1b3d;
+      font-weight: bold;
+      border: none;
+      border-radius: 1.5rem;
+      /* Rounded-3xl */
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .btn-bg:hover {
+      background-color: #01e5e5;
+    }
+
+    .footer-link {
+      margin-top: 16px;
+      font-size: 0.9rem;
+      /* Slightly smaller font for footer */
+    }
+
+    .footer-link a {
+      text-decoration: underline;
+      color: #ff5733;
+      /* A warm red color for contrast */
+    }
+
+    .footer-link a:hover {
+      color: #ff1a1a;
+      /* Darker red on hover */
+    }
+
+    .hr-animation {
+      position: relative;
+      height: 2px;
+      /* Thickness of the line */
+      background: linear-gradient(to right, transparent, cyan, transparent);
+      border: none;
+      /* Remove default border */
+      overflow: hidden;
+      /* Hide overflow for smooth animation */
+    }
+
+    .hr-animation::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      /* Start position */
+      height: 100%;
+      /* Match the height of the hr */
+      width: 100%;
+      /* Match the width of the hr */
+      background: linear-gradient(to right, transparent, cyan, transparent);
+      animation: move-light 4s linear infinite;
+      /* Animation settings */
+    }
+
+    @keyframes move-light {
+      0% {
+        left: -100%;
+        /* Start off-screen to the left */
       }
 
-      .container {
-        max-width: 600px;
-        padding: 2rem;
-        background: #1d1b3d; /* Dark background for the card */
-        border-radius: 12px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      50% {
+        left: 100%;
+        /* Move off-screen to the right */
       }
 
-      h1,
-      h2 {
-        color: #44c7e4;
-        font-weight: bolder;
+      100% {
+        left: -100%;
+        /* Reset to start again */
       }
-      .message {
-        color: #b3ff27;
-      }
+    }
+  </style>
+</head>
 
-      .summary {
-        margin-top: 20px;
-        text-align: left;
-      }
+<body>
+  <div class="container">
+    <h1 class="message">{{message}}</h1>
+    <p>Thank you for being with TastyTale!</p>
+    <hr class="hr-animation" />
+    <div class="summary">
+      <h2>User Information</h2>
+      <p><span class="highlight">Customer Name:</span> {{user.name}}</p>
+      <p><span class="highlight">Email:</span> {{user.email}}</p>
+      <p><span class="highlight">Phone:</span> {{user.phone}}</p>
+      <p><span class="highlight">Address:</span> {{user.address}}</p>
+      <h2>Payment Information</h2>
 
-      .summary p {
-        margin: 5px 0;
-      }
-
-      .highlight {
-        font-weight: bold;
-        color: #007bff;
-      }
-
-      .btn-bg {
-        display: inline-block;
-        margin-top: 1.5rem;
-        padding: 0.5rem 1.5rem;
-        background-color: #00ffff; /* Cyan background */
-        color: #1d1b3d;
-        font-weight: bold;
-        border: none;
-        border-radius: 1.5rem; /* Rounded-3xl */
-        cursor: pointer;
-        text-align: center;
-      }
-      .btn-bg:hover {
-        background-color: #01e5e5;
-      }
-      .footer-link {
-        margin-top: 16px;
-        font-size: 0.9rem; /* Slightly smaller font for footer */
-      }
-
-      .footer-link a {
-        text-decoration: underline;
-        color: #ff5733; /* A warm red color for contrast */
-      }
-
-      .footer-link a:hover {
-        color: #ff1a1a; /* Darker red on hover */
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="container">
-      <h1 class="message">{{message}}</h1>
-      <p>Thank you for being with TastyTale!</p>
-      <hr />
-      <div class="summary">
-        <h2>User Information</h2>
-        <p><span class="highlight">Customer Name:</span> {{user.name}}</p>
-        <p><span class="highlight">Email:</span> {{user.email}}</p>
-        <p><span class="highlight">Phone:</span> {{user.phone}}</p>
-        <p><span class="highlight">Address:</span> {{user.address}}</p>
-        <h2>Payment Information</h2>
-
-        <p><span class="highlight">Transaction ID:</span> {{transactionId}}</p>
-        <p>
-          <span class="highlight">Total Amount Paid:</span>
-          ${{totalPayableAmount}}
-        </p>
-        <p><span class="highlight">Booking Date:</span> {{createdAt}}</p>
-      </div>
-      <button class="btn-bg" onclick="window.print()">
-        Print Confirmation Copy
-      </button>
-      <div class="footer-link">
-        <a href="http://localhost:3000/">Go TastyTale Home</a>
-      </div>
+      <p><span class="highlight">Transaction ID:</span> {{transactionId}}</p>
+      <p>
+        <span class="highlight">Total Amount Paid:</span>
+        ${{totalPayableAmount}}
+      </p>
+      <p><span class="highlight">Booking Date:</span> {{createdAt}}</p>
     </div>
-  </body>
+    <button class="btn-bg" onclick="window.print()">
+      Print Confirmation Copy
+    </button>
+    <div class="footer-link">
+      <a href="http://localhost:3000/">Go TastyTale Home</a>
+    </div>
+  </div>
+</body>
+
 </html>
