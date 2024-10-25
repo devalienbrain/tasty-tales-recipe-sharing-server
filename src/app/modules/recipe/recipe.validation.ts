@@ -7,7 +7,7 @@ export const recipeValidationSchema = z.object({
     .array(z.string())
     .nonempty("At least one ingredient is required"),
   instructions: z.string().min(1, "Instructions are required"),
-  userId: z.string().min(1, "userId is required"),
+  createdBy: z.string().min(1, "userId is required"),
   cookingTime: z.number().min(1, "Cooking time must be greater than 0"),
   imageUrl: z.string().optional(),
 });
