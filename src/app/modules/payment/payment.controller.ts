@@ -1,20 +1,21 @@
 import { Request, Response } from "express";
-import { paymentServices } from "./payment.service";
+import { paymentService } from "./payment.service";
 
-const confirmationController = async (req: Request, res: Response) => {
-  const { transactionId, status } = req.query;
-
+export const confirmationController = async (req: Request, res: Response) => {
   try {
-    const result = await paymentServices.confirmationService(
-      transactionId as string,
-      status as string
-    );
-    res.send(result); // Send the result as confirmation HTML or a JSON response
-  } catch (error) {
-    res.status(500).json({ error: "Payment confirmation failed!" });
-  }
-};
+    const { transactionId, status } = req.query;
 
-export const paymentController = {
-  confirmationController,
+    const result = await paymentService.handlePaymentConfirmation(transactionId as string, status as string);
+
+    res.status(200).json({
+      success: true,
+      message: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Payment confirmation failed.",
+      error: (error as Error).message,
+    });
+  }
 };

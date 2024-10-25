@@ -1,32 +1,27 @@
-import { User } from "../user/user.model";
+import Order from "../order/order.model";
 import { verifyPayment } from "./payment.utils";
 
-const confirmationService = async (transactionId: string, status: string) => {
-  // Verify the payment transaction
-  const verifyResponse = await verifyPayment(transactionId);
+const handlePaymentConfirmation = async (
+  transactionId: string,
+  status: string
+) => {
+  const order = await Order.findOne({ transactionId });
 
-  if (verifyResponse && verifyResponse.pay_status === "Successful") {
-    // Update user's subscription status to 'Premium'
-    const updatedUser = await User.findOneAndUpdate(
-      { "transactions.transactionId": transactionId }, // Find user by transaction
-      { $set: { "subscription.status": "Premium" } }, // Set subscription to Premium
-      { new: true } // Return updated user
-    );
+  if (!order) throw new Error("Order not found");
 
-    if (!updatedUser) {
-      throw new Error("User not found or update failed.");
-    }
-
-    return {
-      message: "Payment Success! User upgraded to Premium.",
-      user: updatedUser,
-      transactionId,
-    };
+  if (status === "success") {
+    order.status = "Paid";
+    order.paymentStatus = "Paid";
   } else {
-    throw new Error("Payment failed or not verified.");
+    order.status = "Cancelled";
+    order.paymentStatus = "Failed";
   }
+
+  await order.save();
+
+  return `Payment ${status} and order updated.`;
 };
 
-export const paymentServices = {
-  confirmationService,
+export const paymentService = {
+  handlePaymentConfirmation,
 };
