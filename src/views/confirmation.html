@@ -3,30 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Payment Confirmation: TastyTales Recipe Sharing Platform</title>
+    <title>Payment Confirmation: TastyTale</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f9;
-        margin: 0;
-        padding: 0;
+        background-color: #2d2a45; /* Synthwave theme's primary background color */
+        color: whitesmoke; /* Text color to contrast with the dark background */
+        font-family: "Arial", sans-serif;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-      }
-
-      .container {
-        background-color: #fff;
-        border-radius: 8px;
-        padding: 20px;
-        max-width: 600px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        min-height: 100vh;
+        margin: 0;
+        font-size: medium;
+        font-weight: bold;
         text-align: center;
       }
 
-      h1 {
-        color: #28a745;
+      .container {
+        max-width: 600px;
+        padding: 2rem;
+        background: #1d1b3d; /* Dark background for the card */
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      h1,
+      h2 {
+        color: #44c7e4;
+        font-weight: bolder;
+      }
+      .message {
+        color: #b3ff27;
       }
 
       .summary {
@@ -43,33 +50,50 @@
         color: #007bff;
       }
 
-      .btn-home {
+      .btn-bg {
         display: inline-block;
-        margin-top: 20px;
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 4px;
+        margin-top: 1.5rem;
+        padding: 0.5rem 1.5rem;
+        background-color: #00ffff; /* Cyan background */
+        color: #1d1b3d;
+        font-weight: bold;
+        border: none;
+        border-radius: 1.5rem; /* Rounded-3xl */
+        cursor: pointer;
+        text-align: center;
+      }
+      .btn-bg:hover {
+        background-color: #01e5e5;
+      }
+      .footer-link {
+        margin-top: 16px;
+        font-size: 0.9rem; /* Slightly smaller font for footer */
       }
 
-      .btn-home:hover {
-        background-color: #0056b3;
+      .footer-link a {
+        text-decoration: underline;
+        color: #ff5733; /* A warm red color for contrast */
+      }
+
+      .footer-link a:hover {
+        color: #ff1a1a; /* Darker red on hover */
       }
     </style>
   </head>
 
   <body>
     <div class="container">
-      <h1>{{message}}</h1>
-      <p>Thank you for booking with Sportly!</p>
-
+      <h1 class="message">{{message}}</h1>
+      <p>Thank you for being with TastyTale!</p>
+      <hr />
       <div class="summary">
-        <h2>Booking Summary</h2>
+        <h2>User Information</h2>
         <p><span class="highlight">Customer Name:</span> {{user.name}}</p>
         <p><span class="highlight">Email:</span> {{user.email}}</p>
         <p><span class="highlight">Phone:</span> {{user.phone}}</p>
         <p><span class="highlight">Address:</span> {{user.address}}</p>
+        <h2>Payment Information</h2>
+
         <p><span class="highlight">Transaction ID:</span> {{transactionId}}</p>
         <p>
           <span class="highlight">Total Amount Paid:</span>
@@ -77,10 +101,12 @@
         </p>
         <p><span class="highlight">Booking Date:</span> {{createdAt}}</p>
       </div>
-
-      <a href="http://localhost:5173/" class="btn-home rounded-3xl"
-        >Go to Homepage</a
-      >
+      <button class="btn-bg" onclick="window.print()">
+        Print Confirmation Copy
+      </button>
+      <div class="footer-link">
+        <a href="http://localhost:3000/">Go TastyTale Home</a>
+      </div>
     </div>
   </body>
 </html>
