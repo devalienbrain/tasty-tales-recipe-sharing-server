@@ -4,6 +4,7 @@ import { IRecipe } from "./recipe.interface";
 const RecipeSchema: Schema = new Schema(
   {
     title: { type: String, required: true },
+    description: { type: String, required: true }, // Added description
     ingredients: { type: [String], required: true },
     instructions: { type: String, required: true },
     cookingTime: { type: Number, required: true },
