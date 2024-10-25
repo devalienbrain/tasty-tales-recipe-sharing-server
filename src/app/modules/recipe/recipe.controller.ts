@@ -46,6 +46,7 @@ export const getRecipeById = async (req: Request, res: Response) => {
 export const updateRecipe = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
+    console.log({ id });
     const validatedData = recipeValidationSchema.parse(req.body);
     const updatedRecipe = await updateRecipeService(id, validatedData);
 

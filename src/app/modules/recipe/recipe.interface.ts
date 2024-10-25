@@ -1,11 +1,11 @@
 export interface IRecipe {
   title: string;
   description: string; // Added description field
-  ingredients: string[];
+  ingredients?: string[];
   instructions: string;
   cookingTime: number; // in minutes
-  createdBy: string; // reference to the user who created the recipe
-  imageUrl?: string; // optional field for the recipe image
+  createdBy?: string; // reference to the user who created the recipe
+  image?: string; // optional field for the recipe image
   createdAt?: Date;
   updatedAt?: Date;
 }
