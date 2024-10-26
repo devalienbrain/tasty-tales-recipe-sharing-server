@@ -1,4 +1,6 @@
-export interface IRecipe {
+import { Document } from "mongoose";
+
+export interface IRecipe extends Document {
   title: string;
   description: string; // Added description field
   ingredients?: string[];

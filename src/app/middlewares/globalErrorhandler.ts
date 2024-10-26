@@ -8,7 +8,8 @@ import handleCastError from '../errors/handleCastError';
 import handleDuplicateError from '../errors/handleDuplicateError';
 import handleValidationError from '../errors/handleValidationError';
 import handleZodError from '../errors/handleZodError';
-import { TErrorSources } from '../interface/error';
+import { TErrorSources } from '../interfaces/error.interface';
+
 
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   //setting default values

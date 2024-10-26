@@ -14,10 +14,6 @@ const loginUser = async (payload: TLoginUser) => {
     throw new AppError(httpStatus.NOT_FOUND, "User not found!");
   }
 
-  if (user.isDeleted) {
-    throw new AppError(httpStatus.FORBIDDEN, "User is deleted!");
-  }
-
   if (!(await User.isPasswordMatched(payload.password, user.password))) {
     throw new AppError(httpStatus.FORBIDDEN, "Password does not match!");
   }
@@ -56,10 +52,6 @@ const refreshToken = async (token: string) => {
 
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, "User not found!");
-  }
-
-  if (user.isDeleted) {
-    throw new AppError(httpStatus.FORBIDDEN, "User is deleted!");
   }
 
   const jwtPayload = {
