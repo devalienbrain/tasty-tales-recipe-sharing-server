@@ -6,14 +6,18 @@ const app: Application = express();
 
 // parsers
 app.use(express.json());
-app.use(cors());
+app.use(
+    cors({
+      origin: [
+        "http://localhost:3000",
+        "https://tasty-tales-recipe-sharing-client.vercel.app",
+      ],
+    })
+  );
 
 app.use("/api", router);
 app.get("/", (req: Request, res: Response) => {
-  // const a = 10;
-  // console.log(a);
-
-  res.send("Hello World!");
+    res.send("Hello 'TastyTales: Recipe Sharing Online Platform' World!");
 });
 
 // console.log(process.cwd());
